@@ -43,35 +43,17 @@ X_train, X_test, y_train, y_test = train_test_split(
 # Create and train a classifier
 classifier = MLPClassifier(activation="relu", solver="lbfgs", max_iter=1000)
 classifier.fit(X_train, y_train)
-
+#%%
 # Predict the value of the digit on the test subset
 predicted = classifier.predict(X_test)
 
-###############################################################################
-# visualize the first 4 test samples and show their predicted digit value
-
-# _, axes = plt.subplots(nrows=1, ncols=4, figsize=(10, 3))
-# for ax, image, prediction in zip(axes, X_test, predicted):
-#     ax.set_axis_off()
-#     image = image.reshape(8, 8)
-#     ax.imshow(image, cmap=plt.cm.gray_r, interpolation="nearest")
-#     ax.set_title(f"Prediction: {prediction}")
-
-###############################################################################
-# :func:`~sklearn.metrics.classification_report` builds a text report showing
-# the main classification metrics.
-
+# Classification report
 print(
     f"Classification report for classifier {classifier}:\n"
     f"{metrics.classification_report(y_test, predicted)}\n"
 )
 
-###############################################################################
-# We can also plot a :ref:`confusion matrix <confusion_matrix>` of the
-# true digit values and the predicted digit values.
-
+# Plot and print confusion matrix 
 disp = metrics.ConfusionMatrixDisplay.from_predictions(y_test, predicted)
 disp.figure_.suptitle("Confusion Matrix")
 print(f"Confusion matrix:\n{disp.confusion_matrix}")
-
-plt.show()
