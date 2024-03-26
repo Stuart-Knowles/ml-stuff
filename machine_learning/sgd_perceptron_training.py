@@ -9,6 +9,7 @@ It's ugly, but it works, and is a nice POC of how simple this technique can be a
 import numpy as np
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
+from time import perf_counter
 
 import matplotlib.pyplot as plt
 
@@ -19,7 +20,7 @@ digits = datasets.load_digits(n_class=2)  # binary classification
 data = digits.images.reshape((digits.images.shape[0], -1))
 
 # %% Train
-
+start = perf_counter()
 # split the data into train and test
 # and normalize the targets to +-1 for easier binary classification
 X_train, X_test, y_train, y_test = train_test_split(
@@ -64,6 +65,8 @@ for _ in range(n_iter):
 
         weights[0] -= eta * delta_weights_0
         weights[1] -= eta * delta_weights_1
+
+print(f"training time: {perf_counter() - start:.2f} s")
 
 
 # %% Test
